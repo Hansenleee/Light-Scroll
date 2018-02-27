@@ -5,6 +5,7 @@ import './utils/raf'
 import init from './scroll/init'
 import eventHandler from './scroll/event'
 import pulling from './scroll/pulling'
+import scroll from './scroll/scroll'
 
 function LScroll(el, options) {
   // 外部滚动
@@ -17,5 +18,6 @@ function LScroll(el, options) {
 init(LScroll)
 eventHandler(LScroll)
 pulling(LScroll)
+scroll(LScroll)
 
 export default LScroll

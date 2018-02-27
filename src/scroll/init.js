@@ -32,28 +32,26 @@ export default (LScroll) => {
     this.showFooter = false
     // 对外监听事件
     this.events = {}
+    // 是否销毁掉
+    this.isDestory = false
 
     /**
      * 初始化事件绑定
      */
+    const eventHandler = queue.setEvent
+
     if (this._pullUpLoad) {
       // 只有在开启了上拉加载更多时才会去监听
-      const scrollHandle = queue.setEvent.bind(this.wrapper, this._onScroll)
+      const scrollHandle = eventHandler.bind(this.wrapper, this._onScroll)
       bind(this.wrapper, 'scroll', scrollHandle)
     }
-  }
+  
+    // 绑定触摸事件
+    const container = this.container
 
-  /**
-   * 滚动事件
-   */
-  LScroll.prototype._onScroll = () => {
-    const wrapper = this.wrapper
-    const threshold = this._pullUpLoad.threshold || 0
-
-    if (wrapper.scrollTop + wrapper.offsetHeight + threshold
-      >= wrapper.scrollHeight && !this.onPullUpLoading) {
-      // 触发下拉刷新
-      this._pullingUpLoad()
-    }
+    bind(container, 'touchstart', eventHandler.bind(container, this._touchStart))
+    bind(container, 'touchmove', eventHandler.bind(container, this._touchMove))
+    bind(container, 'touchend', eventHandler.bind(container, this._touchEnd))
+    bind(container, 'touchcancel', eventHandler.bind(container, this._touchEnd))
   }
 }
