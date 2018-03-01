@@ -6,9 +6,10 @@ export default (LScroll) => {
   /**
    * 滚动事件
    */
-  LScroll.prototype._onScroll = () => {
+  LScroll.prototype._onScroll = function() {
     const wrapper = this.wrapper
     const threshold = this._pullUpLoad.threshold || 0
+    console.log(wrapper.scrollTop)
 
     if (wrapper.scrollTop + wrapper.offsetHeight + threshold
       >= wrapper.scrollHeight && !this.onPullUpLoading) {
@@ -20,7 +21,7 @@ export default (LScroll) => {
   /**
    * 触摸开始事件
    */
-  LScroll.prototype._touchStart = (e) => {
+  LScroll.prototype._touchStart = function(e) {
     const touch = e.touches[0]
     this.startY = touch.clientY
     this.onTouch = true
@@ -33,7 +34,7 @@ export default (LScroll) => {
    * 1.scrollTop为0
    * 2.向下滑动
    */
-  LScroll.prototype._touchMove = (e) => {
+  LScroll.prototype._touchMove = function(e) {
     if (!this.onTouch) return false
     const scrollTop = this.wrapper.scrollTop
     const touch = e.touches[0]
@@ -58,7 +59,7 @@ export default (LScroll) => {
   /**
    * 触摸结束事件
    */
-  LScroll.prototype._touchEnd = () => {
+  LScroll.prototype._touchEnd = function() {
     // 触摸结束判断是否达到刷新位置
     if (this.touchDistanceY >= this.constructor.PULLDOWN_FRESH && this.onTouch) {
       this._pullingFresh()
@@ -71,7 +72,7 @@ export default (LScroll) => {
   /**
    * 处理滑动结束
    */
-  LScroll.prototype._touchEndHandler = () => {
+  LScroll.prototype._touchEndHandler = function() {
     // 下拉刷新中
     if (this.isPullingDown) return
     // 标识
@@ -85,7 +86,7 @@ export default (LScroll) => {
   /**
    * 下拉样式等设置回归到原始状态
    */
-  LScroll.prototype._resetTouch = () => {
+  LScroll.prototype._resetTouch = function() {
     /**
      * 这里设置为0.01，因为如果为0的话，可能DOM上判断会直接隐藏掉
      * 就没有回弹动画
@@ -101,7 +102,7 @@ export default (LScroll) => {
   /**
    * 下拉的样式设置
    */
-  LScroll.prototype._setRefreshBar = (time = 0) => {
+  LScroll.prototype._setRefreshBar = function(time = 0) {
     const refresh = this._pullDownRefresh_bar
 
     if (refresh) {
@@ -115,5 +116,5 @@ export default (LScroll) => {
   /**
    * 缓存住当前的scrollTop值
    */
-  LScroll.prototype._storeScroll = () => {}
+  LScroll.prototype._storeScroll = function() {}
 } 

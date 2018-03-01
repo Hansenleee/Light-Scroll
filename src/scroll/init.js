@@ -13,7 +13,7 @@ export default (LScroll) => {
   LScroll.PULLDOWN_BACK_TIME = 500
 
   // 添加方法到原型上
-  LScroll.prototype._init = (options = {}) => {
+  LScroll.prototype._init = function(options = {}) {
     /**
      * 初始化配置参数，以_开头
      */
@@ -63,7 +63,7 @@ export default (LScroll) => {
 
     if (this._pullUpLoad) {
       // 只有在开启了上拉加载更多时才会去监听
-      const scrollHandle = eventHandler.bind(this.wrapper, this._onScroll)
+      const scrollHandle = eventHandler.bind(queue, this._onScroll.bind(this))
       bind(this.wrapper, 'scroll', scrollHandle)
     }
     
@@ -71,10 +71,10 @@ export default (LScroll) => {
       // 只有开启下拉刷新时才绑定触摸事件
       const container = this.container
 
-      bind(container, 'touchstart', eventHandler.bind(container, this._touchStart))
-      bind(container, 'touchmove', eventHandler.bind(container, this._touchMove))
-      bind(container, 'touchend', eventHandler.bind(container, this._touchEnd))
-      bind(container, 'touchcancel', eventHandler.bind(container, this._touchEnd))
+      bind(container, 'touchstart', eventHandler.bind(queue, this._touchStart.bind(this)))
+      bind(container, 'touchmove', eventHandler.bind(queue, this._touchMove.bind(this)))
+      bind(container, 'touchend', eventHandler.bind(queue, this._touchEnd.bind(this)))
+      bind(container, 'touchcancel', eventHandler.bind(queue, this._touchEnd.bind(this)))
     }
     
   }

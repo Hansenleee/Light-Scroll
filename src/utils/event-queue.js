@@ -11,8 +11,8 @@ export default {
   /**
    * 触发事件，塞入队列
    */
-  setEvent(event) {
-    queue.push(event)
+  setEvent(event, ...args) {
+    queue.push(event.bind(null, ...args))
 
     if (!this.active) {
       this.start()
@@ -27,13 +27,15 @@ export default {
 
     if (event) {
       const res = event()
-      if (res.then) {
+      if ((res || {}).then) {
         res.then(() => {
           this.start(++index)
         })
       } else {
         this.start(++index)
       }
+    } else {
+      this.active = false
     }
   },
 }

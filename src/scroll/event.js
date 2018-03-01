@@ -9,7 +9,7 @@ export default (LScroll) => {
   /**
    * 对外接口监听事件
    */
-  LScroll.prototype.on = (name, handler) => {
+  LScroll.prototype.on = function(name, handler) {
     if (this.events[name]) {
       this.events[name].push(handler)
     } else {
@@ -20,7 +20,7 @@ export default (LScroll) => {
   /**
    * 触发事件
    */
-  LScroll.prototype.emit = (name) => {
+  LScroll.prototype.emit = function(name) {
     const events = this.events
 
     if (!events[name]) {
@@ -35,7 +35,7 @@ export default (LScroll) => {
   /**
    * 加载（加载更多，下拉刷新）结束事件
    */
-  LScroll.prototype.finishLoad = () => {
+  LScroll.prototype.finishLoad = function() {
     if (this.isPullingDown) {
       // 如果是下拉刷新
       this._finishPullDown()
@@ -48,12 +48,12 @@ export default (LScroll) => {
   /**
    * 刷新事件
    */
-  LScroll.prototype.refresh = () => {}
+  LScroll.prototype.refresh = function() {}
 
   /**
    * 销毁事件
    */
-  LScroll.prototype.destory = () => {
+  LScroll.prototype.destory = function() {
     this.destory = true
 
     // 解绑事件

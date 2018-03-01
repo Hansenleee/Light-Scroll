@@ -7,7 +7,7 @@ export default (LScroll) => {
   /**
    * 上拉加载更多
    */
-  LScroll.prototype._pullingUpLoad = () => {
+  LScroll.prototype._pullingUpLoad = function() {
     // 标记正在加载更多
     this.onPullUpLoading = true
     // 触发加载更多事件
@@ -17,14 +17,14 @@ export default (LScroll) => {
   /**
    * 加载更多结束
    */
-  LScroll.prototype._finishPullUp = () => {
+  LScroll.prototype._finishPullUp = function() {
     this.onPullUpLoading = false
   }
 
   /**
    * 下拉刷新
    */
-  LScroll.prototype._pullingFresh = () => {
+  LScroll.prototype._pullingFresh = function() {
     // 标识
     this.isPullingDown = true
     this.beforePulldingDown = false
@@ -41,7 +41,7 @@ export default (LScroll) => {
   /**
    * 下拉刷新结束
    */
-  LScroll.prototype._finishPullDown = () => {
+  LScroll.prototype._finishPullDown = function() {
     // 延时处理，保证动画顺利完成
     setTimeout(() => {
       this.isPullingDown = false
