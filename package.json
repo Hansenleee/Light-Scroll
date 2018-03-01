@@ -1,0 +1,26 @@
+{
+  "name": "light-scroll",
+  "version": "1.0.0",
+  "description": "轻量级的移动端滚动插件",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hansenleee/Light-Scroll.git"
+  },
+  "keywords": [
+    "Light",
+    "Scroll"
+  ],
+  "author": "LEE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hansenleee/Light-Scroll/issues"
+  },
+  "homepage": "https://github.com/Hansenleee/Light-Scroll#readme"
+}

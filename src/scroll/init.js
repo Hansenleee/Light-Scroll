@@ -1,10 +1,17 @@
 /**
  * 初始化
  */
-import { bind } from '../utils/'
+import { bind, isObject } from '../utils/'
 import queue from '../utils/event-queue'
 
 export default (LScroll) => {
+  // 下拉刷新的最大距离
+  LScroll.PULLDOWN_TOP = 180
+  // 下拉刷新的触发距离
+  LScroll.PULLDOWN_FRESH = 120
+  // 下拉刷新结束延时时间
+  LScroll.PULLDOWN_BACK_TIME = 500
+
   // 添加方法到原型上
   LScroll.prototype._init = (options = {}) => {
     /**
@@ -16,12 +23,20 @@ export default (LScroll) => {
     // 上拉加载更多,默认关闭
     this._pullUpLoad = options.pullUpLoad || false
     // 下拉刷新功能，默认关闭
-    this._pullDownRefresh = options.pullDownRefresh || false
+    const freshConfig = options.pullDownRefresh
+
+    this._pullDownRefresh = !!freshConfig || false
+
+    // 如果是对象形式
+    if (isObject(freshConfig)) {
+      this._pullDownRefresh_bar = freshConfig.freshBar
+    } else {
+      // 默认是带有class='fresh'的DOM为刷新的DOM
+      this._pullDownRefresh_bar = this.wrapper.querySelector('.fresh')
+    }
     /**
      * 初始化自定义变量
      */
-    // 滑动距离
-    this.touchDistanceY = 0
     // 下拉刷新前
     this.beforePullingDown = true
     // 下拉刷新中
@@ -30,6 +45,12 @@ export default (LScroll) => {
     this.onPullUpLoading = false
     // 是否显示底部加载中等问题
     this.showFooter = false
+    // 滑动距离
+    this.touchDistanceY = 0
+    // 是否在触摸滚动中
+    this.onTouch = false
+    // 触摸点的Y轴坐标
+    this.startY = 0
     // 对外监听事件
     this.events = {}
     // 是否销毁掉
@@ -45,13 +66,16 @@ export default (LScroll) => {
       const scrollHandle = eventHandler.bind(this.wrapper, this._onScroll)
       bind(this.wrapper, 'scroll', scrollHandle)
     }
-  
-    // 绑定触摸事件
-    const container = this.container
+    
+    if (this._pullDownRefresh) {
+      // 只有开启下拉刷新时才绑定触摸事件
+      const container = this.container
 
-    bind(container, 'touchstart', eventHandler.bind(container, this._touchStart))
-    bind(container, 'touchmove', eventHandler.bind(container, this._touchMove))
-    bind(container, 'touchend', eventHandler.bind(container, this._touchEnd))
-    bind(container, 'touchcancel', eventHandler.bind(container, this._touchEnd))
+      bind(container, 'touchstart', eventHandler.bind(container, this._touchStart))
+      bind(container, 'touchmove', eventHandler.bind(container, this._touchMove))
+      bind(container, 'touchend', eventHandler.bind(container, this._touchEnd))
+      bind(container, 'touchcancel', eventHandler.bind(container, this._touchEnd))
+    }
+    
   }
 }

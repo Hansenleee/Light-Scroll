@@ -1,5 +1,6 @@
 /**
  * 添加监听和触发等对外事件
+ * 对外接口事件统一放置在此
  */
 import queue from '../utils/event-queue'
 import { remove } from '../utils/'
@@ -29,6 +30,19 @@ export default (LScroll) => {
 
     // 触发事件
     queue.start(0, events[name])
+  }
+
+  /**
+   * 加载（加载更多，下拉刷新）结束事件
+   */
+  LScroll.prototype.finishLoad = () => {
+    if (this.isPullingDown) {
+      // 如果是下拉刷新
+      this._finishPullDown()
+    } else if (this.onPullUpLoading) {
+      // 如果是加载更多
+      this._finishPullUp()
+    }
   }
 
   /**
