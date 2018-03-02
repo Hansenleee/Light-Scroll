@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <div class="container">
-      <div class="content">
+      <div class="content" ref="content">
         <div v-for="(item, index) in list" :key="index" class="item">
           {{ index }}
         </div>
@@ -11,6 +11,9 @@
           :y="touchDistanceY"
           :isRefresh="isPullingDown">
         </loading>
+      </div>
+      <div class="load-footer" v-show="showFooter">
+        {{ footerText }}
       </div>
     </div>
   </div>
@@ -26,24 +29,43 @@
     data() {
       return {
         list: new Array(15),
+        showFooter: false,
         touchDistanceY: 0,
         isPullingDown: false,
+        onPullingUp: false,
         page: {
           totalCount: 6,
           currentPage: 0,
         },
       }
     },
+    computed: {
+      /**
+       * 底部文案
+       * @return {String} 返回字符串
+       */
+      footerText() {
+        return this.onPullingUp ? '加载中...' : '已经到底了...'
+      },
+    },
     mounted() {
       this.init()
       this.fetch()
+      this.setFooterVisible()
     },
     methods: {
+      /**
+       * 判断是否需要显示底部
+       */
+      setFooterVisible() {
+        const list = this.$refs.content
+        this.showFooter = list.offsetHeight >= this.$el.offsetHeight
+      },
       /**
        * 加载数据
        */
       fetch(currentPage = 1) {
-        if (currentPage > this.page.totalCount) return Promise.reject()
+        if (currentPage > this.page.totalCount) return Promise.resolve()
         if (currentPage === 1) {
           this.list = new Array(15)
         } else {
@@ -76,9 +98,9 @@
        */
       setStyle(time = 0) {
         const refresh = this.$refs.refresh
+        const top = this.touchDistanceY
 
-        if (refresh) {
-          const top = this.touchDistanceY
+        if (refresh && top > 0) {
           const transition = time ? `transition:all ${time}s;` : ''
           refresh.style.cssText = `transform:translate3d(0,${top}px,0);${transition}`
         }
@@ -89,7 +111,9 @@
        */
       loadMore() {
         console.log('call loadMore')
-        this.fetch(++this.page.currentPage).then(() => {
+        this.onPullingUp = true
+        this.fetch(this.page.currentPage + 1).then(() => {
+          this.onPullingUp = false
           this._scroll.finishLoad()
         })
       },
@@ -101,6 +125,7 @@
         this.isPullingDown = true
         this.fetch(1).then(() => {
           setTimeout(() => {
+            this.isPullingDown = false
             this._scroll.finishLoad()
           }, 500)
         })
@@ -130,6 +155,10 @@
       background: #eee;
       margin-bottom: 40px;
       font-size: 32px;
+
+      &:last-child {
+        margin: 0;
+      }
     }
 
     & .refresh {
@@ -143,6 +172,12 @@
       color: #404040;
       font-size: 26px;
       z-index: 20;
+    }
+
+    & .load-footer {
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
     }
   }
 </style>

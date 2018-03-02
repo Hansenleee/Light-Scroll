@@ -48,7 +48,10 @@ export default (LScroll) => {
   /**
    * 刷新事件
    */
-  LScroll.prototype.refresh = function() {}
+  LScroll.prototype.refresh = function() {
+    // 重新初始化
+    this._init()
+  }
 
   /**
    * 销毁事件
