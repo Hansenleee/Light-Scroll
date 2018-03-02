@@ -2,6 +2,7 @@
  * 上拉加载更多
  * 下拉刷新
  */
+import transition from '../utils/transition'
 
 export default (LScroll) => {
   /**
@@ -31,28 +32,33 @@ export default (LScroll) => {
     this.onTouch = false
   
     // 刷新DOM回弹到特定位置
-    this.touchDistanceY = this.constructor.PULLDOWN_FRESH
-    this._setRefreshBar(0.2)
+    transition.transition(
+      this.touchDistanceY,
+      this.constructor.PULLDOWN_FRESH,
+      -10,
+      this._touchMoveY.bind(this)
+    )
+    
+    // this.touchDistanceY = this.constructor.PULLDOWN_FRESH
+    // this.emit('touchMove', this.touchDistanceY)
   
     // 触发刷新
-    this.emit('reFresh')
+    this.emit('refresh')
   }
 
   /**
    * 下拉刷新结束
    */
   LScroll.prototype._finishPullDown = function() {
+    this.isPullingDown = false
+
     // 延时处理，保证动画顺利完成
     setTimeout(() => {
-      this.isPullingDown = false
-
-      setTimeout(() => {
-        this.beforePulldingDown = true
-      }, this.constructor.PULLDOWN_BACK_TIME)
-      
-      // 刷新结束，回弹动画
-      this._resetTouch()
-    }, 500)
+      this.beforePulldingDown = true
+    }, this.constructor.PULLDOWN_BACK_TIME)
+    
+    // 刷新结束，回弹动画
+    this._resetTouch()
   }
 
 }

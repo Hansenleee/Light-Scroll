@@ -1,6 +1,7 @@
 /**
  * 滚动触摸相关事件
  */
+import transition from '../utils/transition'
 
 export default (LScroll) => {
   /**
@@ -25,7 +26,7 @@ export default (LScroll) => {
     const touch = e.touches[0]
     this.startY = touch.clientY
     this.onTouch = true
-    this.touchDistanceY = 0
+    this._touchMoveY(0)
   }
 
   /**
@@ -46,14 +47,18 @@ export default (LScroll) => {
     if (scrollTop !== 0 || (disY < 0 && this.touchDistanceY === 0)) {
       return this._touchEndHandler()
     }
+
     e.preventDefault()
-    this.touchDistanceY += disY
+
+    // 滑动记录
+    this._touchMoveY(this.touchDistanceY + disY)
+
     // 判断是否可以达到下拉最大位置，如果达到直接出发刷新
     if (this.touchDistanceY >= this.constructor.PULLDOWN_TOP) {
       return this._pullingFresh()
     }
     // 调整下拉刷新bar样式
-    return this._setRefreshBar()
+    // return this._setRefreshBar()
   }
 
   /**
@@ -87,30 +92,32 @@ export default (LScroll) => {
    * 下拉样式等设置回归到原始状态
    */
   LScroll.prototype._resetTouch = function() {
+    // transtion实现从this.touchDistanceY到0的阶段
+    transition.transition(
+      this.touchDistanceY,
+      0,
+      -10,
+      this._touchMoveY.bind(this)
+    )
     /**
      * 这里设置为0.01，因为如果为0的话，可能DOM上判断会直接隐藏掉
      * 就没有回弹动画
      */
-    this.touchDistanceY = 0.01
+    // this._touchMoveY(0)
     // 设置回弹样式
-    this._setRefreshBar(0.4).then(() => {
-      // 最终设置为0
-      this.touchDistanceY = 0
-    })
+    // this._setRefreshBar(0.4).then(() => {
+    //   // 最终设置为0
+    //   this.touchDistanceY = 0
+    // })
   }
 
   /**
-   * 下拉的样式设置
+   * 滑动操作
    */
-  LScroll.prototype._setRefreshBar = function(time = 0) {
-    const refresh = this._pullDownRefresh_bar
-
-    if (refresh) {
-      const top = this.touchDistanceY
-      const transition = time ? `transition:all ${time}s;` : ''
-      refresh.style.cssText = `transform:translate3d(0,${top}px,0);${transition}`
-    }
-    return new Promise(resolve => setTimeout(resolve, time * 1000))
+  LScroll.prototype._touchMoveY = function(y) {
+    this.touchDistanceY = y
+    // 提供接口共外部监听变化
+    this.emit('touchMove', y)
   }
 
   /**

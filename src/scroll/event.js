@@ -20,7 +20,7 @@ export default (LScroll) => {
   /**
    * 触发事件
    */
-  LScroll.prototype.emit = function(name) {
+  LScroll.prototype.emit = function(name, params) {
     const events = this.events
 
     if (!events[name]) {
@@ -29,7 +29,7 @@ export default (LScroll) => {
     }
 
     // 触发事件
-    queue.setEvent(events[name])
+    queue.setEvent(events[name], params)
   }
 
   /**

@@ -1,3 +1,4 @@
+import './utils/responsive'
 import Vue from 'vue'
 import App from './views/app.vue'
 import router from './router'

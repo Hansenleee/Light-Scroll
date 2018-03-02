@@ -2,8 +2,7 @@
  * 整合事件队列
  */
 
-const onRaf = false
-const queue = []
+let queue = []
 
 export default {
   // 是否在执行
@@ -29,20 +28,22 @@ export default {
   /**
    * 启动队列
    */
-  start(index = 0, q = queue) {
-    const event = q[index]
+  start(index = 0) {
+    const event = queue[index]
 
     if (event) {
       const res = event()
       if ((res || {}).then) {
         res.then(() => {
+          // q.splice(index, 1)
           this.start(++index)
         })
       } else {
-        q.splice(index, 1)
+        // q.splice(index, 1)
         this.start(++index)
       }
     } else {
+      queue = []
       this.active = false
     }
   },

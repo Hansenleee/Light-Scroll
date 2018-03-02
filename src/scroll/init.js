@@ -28,14 +28,6 @@ export default (LScroll) => {
     const freshConfig = options.pullDownRefresh
 
     this._pullDownRefresh = !!freshConfig || false
-
-    // 如果是对象形式
-    if (isObject(freshConfig)) {
-      this._pullDownRefresh_bar = freshConfig.freshBar
-    } else {
-      // 默认是带有class='fresh'的DOM为刷新的DOM
-      this._pullDownRefresh_bar = this.wrapper.querySelector('.fresh')
-    }
     /**
      * 初始化自定义变量
      */
