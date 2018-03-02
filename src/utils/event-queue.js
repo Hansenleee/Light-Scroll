@@ -12,18 +12,25 @@ export default {
    * 触发事件，塞入队列
    */
   setEvent(event, ...args) {
-    queue.push(event.bind(null, ...args))
-
+    // 如果event是函数数组
+    if (Array.isArray(event)) {
+      event.forEach((fn) => {
+        queue.push(fn.bind(null, ...args))
+      })
+    } else {
+      queue.push(event.bind(null, ...args))
+    }
+    
     if (!this.active) {
-      this.start()
       this.active = true
+      this.start()
     }
   },
   /**
    * 启动队列
    */
   start(index = 0, q = queue) {
-    const event = queue[index]
+    const event = q[index]
 
     if (event) {
       const res = event()
@@ -32,6 +39,7 @@ export default {
           this.start(++index)
         })
       } else {
+        q.splice(index, 1)
         this.start(++index)
       }
     } else {

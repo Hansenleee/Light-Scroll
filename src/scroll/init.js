@@ -11,6 +11,8 @@ export default (LScroll) => {
   LScroll.PULLDOWN_FRESH = 120
   // 下拉刷新结束延时时间
   LScroll.PULLDOWN_BACK_TIME = 500
+  // 默认的触发上拉加载更多的阈值
+  LScroll.PULLDONG_LOAD_THRESHOLD = 100
 
   // 添加方法到原型上
   LScroll.prototype._init = function(options = {}) {

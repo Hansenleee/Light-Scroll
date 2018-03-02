@@ -13,7 +13,7 @@ export default (LScroll) => {
     if (this.events[name]) {
       this.events[name].push(handler)
     } else {
-      this.events[name] = []
+      this.events[name] = [handler]
     }
   }
 
@@ -29,7 +29,7 @@ export default (LScroll) => {
     }
 
     // 触发事件
-    queue.start(0, events[name])
+    queue.setEvent(events[name])
   }
 
   /**

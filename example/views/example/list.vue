@@ -16,16 +16,55 @@
     data() {
       return {
         list: new Array(15),
+        page: {
+          totalCount: 6,
+          currentPage: 0,
+        },
       }
     },
     mounted() {
-      this._scroll = new LScroll('.container', {
-        pullUpLoad: true,
-        pullDownRefresh: true,
-      })
-      this._scroll.on('loadMore', () => {
-        console.log(111)
-      })
+      this.init()
+      this.fetch()
+    },
+    methods: {
+      /**
+       * 加载数据
+       */
+      fetch(currentPage = 1) {
+        if (currentPage > this.page.totalCount) return Promise.reject()
+        if (currentPage === 1) {
+          this.list = new Array(15)
+        } else {
+          this.list = this.list.concat(new Array(15))
+        }
+        this.page.currentPage = currentPage
+        return Promise.resolve()
+      },
+      /**
+       * 初始化LScroll
+       */
+      init() {
+        this._scroll = new LScroll('.container', {
+          pullUpLoad: true,
+          pullDownRefresh: true,
+        })
+        this._scroll.on('loadMore', this.loadMore)
+        this._scroll.on('reFresh', this.reFresh)
+      },
+      /**
+       * 加载更多
+       */
+      loadMore() {
+        this.fetch(++this.page.currentPage).then(() => {
+          this._scroll.finishLoad()
+        })
+      },
+      /**
+       * 刷新
+       */
+      reFresh() {
+        console.log('fresh')
+      },
     }
   }
 </script>

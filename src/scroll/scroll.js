@@ -8,8 +8,8 @@ export default (LScroll) => {
    */
   LScroll.prototype._onScroll = function() {
     const wrapper = this.wrapper
-    const threshold = this._pullUpLoad.threshold || 0
-    console.log(wrapper.scrollTop)
+    // 加载更多触发的阈值
+    const threshold = this._pullUpLoad.threshold || this.constructor.PULLDONG_LOAD_THRESHOLD
 
     if (wrapper.scrollTop + wrapper.offsetHeight + threshold
       >= wrapper.scrollHeight && !this.onPullUpLoading) {
