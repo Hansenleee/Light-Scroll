@@ -1,0 +1,8 @@
+build
+config
+example
+node_modules
+server
+test
+.gitignore
+.npmignore

@@ -7,21 +7,21 @@ export default [
   {
     input: './src/index.js',
     output: {
-      file: './dist/Lscroll.js',
+      file: './public/Lscroll.js',
       format: 'umd',
       name: 'Lscroll'
     }
   }, {
     input: './src/index.js',
     output: {
-      file: './dist/Lscroll-esm.js',
+      file: './public/Lscroll-esm.js',
       format: 'es',
       name: 'Lscroll-esm'
     }
   }, {
     input: './src/index.js',
     output: {
-      file: './dist/Lscroll-min.js',
+      file: './public/Lscroll-min.js',
       format: 'umd',
       name: 'Lscroll'
     },

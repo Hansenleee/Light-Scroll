@@ -3,7 +3,7 @@
     <div class="container">
       <div class="content" ref="content">
         <div v-for="(item, index) in list" :key="index" class="item">
-          {{ index }}
+          我是第 {{ index + 1 }} 条数据
         </div>
       </div>
       <div ref="refresh" class="refresh" v-show="touchDistanceY > 0">
@@ -137,6 +137,7 @@
 
   .list {
     height: 100vh;
+    padding: 0 20px;
   }
 
   .container {
@@ -147,18 +148,18 @@
 
     & .content {
       overflow: hidden;
+      padding: 0 10px;
     }
 
     & .item {
       height: 200px;
       line-height 200px;
-      background: #eee;
-      margin-bottom: 40px;
-      font-size: 32px;
-
-      &:last-child {
-        margin: 0;
-      }
+      // background: #eee;
+      margin-top: 40px;
+      font-size: 28px;
+      border:1px solid #ccc;
+      border-radius: 20px;
+      box-shadow: 0 0px 10px #ccc;
     }
 
     & .refresh {
