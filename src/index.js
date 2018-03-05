@@ -1,5 +1,5 @@
 /**
- * Light 类
+ * LScroll-类
  */
 import './utils/raf'
 import init from './scroll/init'

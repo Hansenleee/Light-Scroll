@@ -1,7 +1,7 @@
 /**
  * 初始化
  */
-import { bind, isObject } from '../utils/'
+import { bind, isObject } from '../utils/index'
 import queue from '../utils/event-queue'
 
 export default (LScroll) => {

@@ -3,7 +3,7 @@
  * 对外接口事件统一放置在此
  */
 import queue from '../utils/event-queue'
-import { remove } from '../utils/'
+import { remove } from '../utils/index'
 
 export default (LScroll) => {
   /**
