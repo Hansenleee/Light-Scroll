@@ -13,6 +13,8 @@ export default (LScroll) => {
   LScroll.PULLDOWN_BACK_TIME = 500
   // 默认的触发上拉加载更多的阈值
   LScroll.PULLDONG_LOAD_THRESHOLD = 100
+  // 记录在session缓存里的key前缀
+  LScroll.SESSION_KEY_PREFIX = 'LSCROLL_'
 
   // 添加方法到原型上
   LScroll.prototype._init = function(options = {}) {

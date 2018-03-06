@@ -1,8 +1,11 @@
 build
 config
+dist
 example
 node_modules
 server
 test
 .gitignore
 .npmignore
+index.html
+rollup.config.js
