@@ -25,9 +25,9 @@ var scroll = new LScroll(el, { ... })
 ## 配置项说明
 
 ### 配置参数
-```session``` - 表示是否开启浏览定位缓存功能
-```pullUpLoad``` default: ```false``` - 表示是否开启上拉加载更多
-```pullDownRefresh``` default: ```false``` - 表示是否开启下拉刷新
+```session``` - 表示是否开启浏览定位缓存功能   
+```pullUpLoad``` default: ```false``` - 表示是否开启上拉加载更多   
+```pullDownRefresh``` default: ```false``` - 表示是否开启下拉刷新   
 
 ### 对外事件监听
 ```javascript
