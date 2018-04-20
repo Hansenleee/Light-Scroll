@@ -136,17 +136,15 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 
   .list {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    padding: 88px 20px 0;
+    flex: 1;
+    padding: 0px 0px 0;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   .container {
     height: 100%;
+    padding: 0 20px;
     overflow: auto;
     position: relative;
     -webkit-overflow-scrolling: touch;
