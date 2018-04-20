@@ -39,9 +39,11 @@ scroll.on('loadMore', function() {})
 scroll.on('refresh', function() {})
 
 // 拖拽出现下拉刷新时的touch事件
-scroll.on('refresh', function() {}))
+scroll.on('touchMove', function() {}))
 ``` 
 
 ## 在线实例DEMO
+
+![扫一扫看示例](https://s18.postimg.cc/6jim6nell/1524213318.png)
 
 http://lscroll.libin.site/example/list
