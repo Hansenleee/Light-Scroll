@@ -1,6 +1,6 @@
 {
   "name": "light-scroll",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "轻量级的移动端滚动插件",
   "main": "index.js",
   "scripts": {
