@@ -139,6 +139,8 @@ var init = (LScroll) => {
   LScroll.PULLDOWN_BACK_TIME = 500;
   // 默认的触发上拉加载更多的阈值
   LScroll.PULLDONG_LOAD_THRESHOLD = 100;
+  // 记录在session缓存里的key前缀
+  LScroll.SESSION_KEY_PREFIX = 'LSCROLL_';
 
   // 添加方法到原型上
   LScroll.prototype._init = function(options = {}) {
@@ -278,6 +280,13 @@ var eventHandler = (LScroll) => {
  * js实现transition阶段
  */
 var transition = {
+  /**
+   * transition动画
+   * @param {*} from - 从
+   * @param {*} end - 到
+   * @param {*} step - 步长
+   * @param {*} callBack - 回调函数
+   */
   transition(from, end, step = 1, callBack) {
     let now = from;
 
